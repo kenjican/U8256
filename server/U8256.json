@@ -1,0 +1,17 @@
+{
+  "COM":{
+    "baudRate":9600,
+    "stopBits":1,
+    "dataBits":8,
+    "parity":"even"
+  },
+  
+  "getAna":"@010140*\r\n",
+  "run":"@015301177*\r\n",
+  "stop":"@015302174*\r\n",
+  "steps":"@015304172*\r\n",
+  "holds":"@015303175*\r\n",
+  "getSteps":"@0120"
+}
+
+

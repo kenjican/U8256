@@ -2,20 +2,13 @@
 <html>
 <head>
 <meta charset='utf-8'/>
-<script>
-let url = "ws://suzhou.accutherm.com.cn:8887";
-let user;
-let socket;
+<script src="./client/U8256.js"></script>
 
-socket = new WebSocket(url);
-socket.onmessage = function(msg){
-  document.getElementById("fb").innerHTML = msg.data;
-}
-
-</script>
+<script src="./client/jquery-3.3.1..js"></script>
 </head>
 <body>
 <label id="fb">测试</label>
-
+<input id="sd" type="text" style="width:50%"/>
+<button type="button" onclick="fcsSend($('#sb'));">发送指令</button>
 </body>
 </html>
