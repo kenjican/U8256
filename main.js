@@ -19,7 +19,7 @@ let parser = U1.pipe(new Readline({delimiter:'\r\n'}));
 
 
 parser.on('data',function(data){
-  console.log(data);
+  checkFS(data);
   sendall(data);
 });
 
@@ -42,8 +42,8 @@ app.get('/',function(req,res){
 app.listen(8888);
 /*
 web socket
-
 */
+
 let wss = new WebSocketServer({port:8887});
 
 function sendall(buf){
@@ -52,7 +52,17 @@ function sendall(buf){
   });
 }
 
+function checkFS(cmd){
+  console.log(cmd.length);
+  let FS = 0x40;
+  for(let i=1;i<cmd.length-3;i++){
+    FS = FS ^ cmd.charCodeAt(i);
+  }
 
-var t1 = setInterval(()=>U1Cmd(U8256P.getAna),1000);
+  console.log(FS.toString(16));
+
+}
+
+var t1 = setInterval(()=>U1Cmd(U8256P.getAna),10000);
 
 
