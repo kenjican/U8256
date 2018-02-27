@@ -2,13 +2,27 @@
 <html>
 <head>
 <meta charset='utf-8'/>
-<script src="./client/U8256.js"></script>
 
-<script src="./client/jquery-3.3.1..js"></script>
+<script src="./client/jquery-3.3.1.min.js"></script>
+<script src="./client/U8256.js"></script>
 </head>
 <body>
 <label id="fb">测试</label>
-<input id="sd" type="text" style="width:50%"/>
-<button type="button" onclick="fcsSend($('#sb'));">发送指令</button>
+<input id="sd" type="text" style="width:50%">
+<button type="button" id="fcsSend">发送指令</button>
+<br><h1>读取组数<input id="patt" type="number" style="width:30%">
+<button type="button" id="getSteps">读程序内容</button></h1><br>
+
+<table contenteditable="true" border="2">
+<tr draggable="true"><td>第一行第一列</td><td>第一行第二列</td></tr>
+<tr><td>第二行第一列</td><td>第二行第二列</td></tr>
+
+</table>
+
+<button type="button" id="getcells">读取cell值</button>
+
+<textarea id="ana" rows="30" cols="30"></textarea>
+
+
 </body>
 </html>

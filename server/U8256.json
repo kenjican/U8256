@@ -6,12 +6,49 @@
     "parity":"even"
   },
   
-  "getAna":"@010140*\r\n",
+  "AnaData":{
+     "TPV":0,
+     "HPV":0,
+     "TSV":0,
+     "HSV":0,
+     "AHR":0,
+     "AMin":0,
+     "Steps":0,
+     "Patt":0,
+     "TRC":0,
+     "TRNC":0,
+     "PRC":0,
+     "PRNC":0,
+     "PRSS":0,
+     "PRES":0,
+     "NHR":0,
+     "NMin":0,
+     "TMVV":0,
+     "HMVC":0,
+     "HMVV":0,
+     "TMVC":0,
+     "Mon":0,
+     "Day":0,
+     "Year":0,
+     "NHR":0,
+     "NMin":0,
+     "NSec":0
+  },
+
+  "DigiData":{
+     "GP1":0,
+     "GP2":0,
+     "GP3":0
+  },
+
+  "getAna":"@010140*\r",
+  "getDigi":"@015145*\r",
   "run":"@015301177*\r\n",
   "stop":"@015302174*\r\n",
   "steps":"@015304172*\r\n",
   "holds":"@015303175*\r\n",
-  "getSteps":"@0120"
+  "getSteps":"@0120",
+  "setSteps":"@0110"
 }
 
 
