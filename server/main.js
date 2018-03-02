@@ -6,7 +6,43 @@ let serialP = require('serialport');
 let Readline = serialP.parsers.Readline;
 let U8256P = JSON.parse(fs.readFileSync('./U8256.json'));
 let app = express();
+let mysql = require('mysql');
 
+
+/*
+Mysql
+*/
+let con = mysql.createConnection({
+  host:"localhost",
+  user:"kenji",
+  password:"chenjia1!",
+  database:"THV"
+});
+
+con.connect((err)=>{
+  if(err){
+    console.log('error');
+    return;
+  }
+  console.log('connection OK');
+});
+
+function savedata(){
+  let sql = 'insert into Mar17 (TPV,TSV,TMV,HPV,HSV,HMV,status,trouble,TOF) ';
+  sql += 'values (' + U8256P.StatusData.AnaData.TPV + ',' + U8256P.StatusData.AnaData.TSV +',';
+  sql += U8256P.StatusData.AnaData.TMVV + ',' + U8256P.StatusData.AnaData.HPV +',';
+  sql += U8256P.StatusData.AnaData.HSV + ',' + U8256P.StatusData.AnaData.HMVV +',';
+  sql += U8256P.StatusData.DigiData.GP1 + ',' + U8256P.StatusData.DigiData.GP2 +',';
+  sql += U8256P.StatusData.DigiData.GP3 + ')';
+  //console.log(sql);
+  con.query(sql);
+}
+
+
+/*
+Serial port 
+
+*/
 let U1 = new serialP('/dev/ttyUSB0',{
 	   baudRate:U8256P.COM.baudRate,
 	   dataBits:U8256P.COM.dataBits,
@@ -23,11 +59,15 @@ parser.on('data',function(data){
   //sendall(data);
   switch(data.slice(3,5)){
     case '01':
-      //setTimeout(()=>U1Cmd(U8256P.getDigi),200);
+      U1Cmd(U8256P.getDigi);
       parseAna(data);
+      break;
     case '51':
       parseDigi(data);
+      break;
     default:
+      console.log(data);
+      break;
     //sendall(data);
   }
 });
@@ -60,16 +100,16 @@ function sendall(buf){
     conn.send(buf);
   });
 }
-/*
+
+
 wss.on('connection',function (ws){
   ws.on('message',function(data){
-  console.log(JSON.parse(data));
+  console.log(data);
   
- // U1.write(data);
+  U1.write(data);
   });
 });
 
-*/
 
 function checkFS(cmd){
   console.log(cmd.length);
@@ -80,48 +120,62 @@ function checkFS(cmd){
   console.log(FS.toString(16));
 }
 
+function calva(va){
+  if(va < 32767){
+    return va/100;
+  }else if(va == 32767){
+    return 0;
+  }else{
+    return (va - 65536)/100;
+  }
+
+}
+
+
+
+
 function parseAna(data){
-  U8256P.AnaData.TPV = parseInt(data.slice(5,9),16)/100;
-  U8256P.AnaData.HPV = parseInt(data.slice(9,13),16)/100;
-  U8256P.AnaData.TSV = parseInt(data.slice(13,17),16)/100;
-  U8256P.AnaData.HSV = parseInt(data.slice(17,21),16)/100;
-  U8256P.AnaData.AHR = parseInt(data.slice(21,27),16);
-  U8256P.AnaData.AMin = parseInt(data.slice(27,29),16);
-  U8256P.AnaData.Steps = parseInt(data.slice(29,33),16);
-  U8256P.AnaData.Patt = parseInt(data.slice(33,35),16);
-  U8256P.AnaData.TRC = parseInt(data.slice(36,40),16);
-  U8256P.AnaData.TRNC = parseInt(data.slice(40,44),16);
-  U8256P.AnaData.PRC = parseInt(data.slice(44,48),16);
-  U8256P.AnaData.PRNC = parseInt(data.slice(48,52),16);
-  U8256P.AnaData.PRSS = parseInt(data.slice(52,56),16);
-  U8256P.AnaData.PRES = parseInt(data.slice(56,60),16);
-  U8256P.AnaData.NHR = parseInt(data.slice(60,64),16);
-  U8256P.AnaData.NMin = parseInt(data.slice(64,66),16);
-  U8256P.AnaData.TMVV = parseInt(data.slice(66,68),16);
-  U8256P.AnaData.HMVC = parseInt(data.slice(68,70),16);
-  U8256P.AnaData.HMVV = parseInt(data.slice(70,72),16);
-  U8256P.AnaData.TMVC = parseInt(data.slice(72,74),16);
-  U8256P.AnaData.Mon = parseInt(data.slice(74,76),16);
-  U8256P.AnaData.Day = parseInt(data.slice(76,78),16);
-  U8256P.AnaData.Year = parseInt(data.slice(78,80),16);
-  U8256P.AnaData.NHR = parseInt(data.slice(80,82),16);
-  U8256P.AnaData.NMin = parseInt(data.slice(82,84),16);
-  U8256P.AnaData.NSec = parseInt(data.slice(84,86),16);
+  U8256P.StatusData.AnaData.TPV = calva(parseInt(data.slice(5,9),16));
+  U8256P.StatusData.AnaData.HPV = calva(parseInt(data.slice(9,13),16));
+  U8256P.StatusData.AnaData.TSV = calva(parseInt(data.slice(13,17),16));
+  U8256P.StatusData.AnaData.HSV = calva(parseInt(data.slice(17,21),16));
+  U8256P.StatusData.AnaData.AHR = parseInt(data.slice(21,27),16);
+  U8256P.StatusData.AnaData.AMin = parseInt(data.slice(27,29),16);
+  U8256P.StatusData.AnaData.Steps = parseInt(data.slice(29,33),16);
+  U8256P.StatusData.AnaData.Patt = parseInt(data.slice(33,35),16);
+  U8256P.StatusData.AnaData.TRC = parseInt(data.slice(36,40),16);
+  U8256P.StatusData.AnaData.TRNC = parseInt(data.slice(40,44),16);
+  U8256P.StatusData.AnaData.PRC = parseInt(data.slice(44,48),16);
+  U8256P.StatusData.AnaData.PRNC = parseInt(data.slice(48,52),16);
+  U8256P.StatusData.AnaData.PRSS = parseInt(data.slice(52,56),16);
+  U8256P.StatusData.AnaData.PRES = parseInt(data.slice(56,60),16);
+  U8256P.StatusData.AnaData.NHR = parseInt(data.slice(60,64),16);
+  U8256P.StatusData.AnaData.NMin = parseInt(data.slice(64,66),16);
+  U8256P.StatusData.AnaData.TMVV = parseInt(data.slice(66,68),16);
+  U8256P.StatusData.AnaData.HMVC = parseInt(data.slice(68,70),16);
+  U8256P.StatusData.AnaData.HMVV = parseInt(data.slice(70,72),16);
+  U8256P.StatusData.AnaData.TMVC = parseInt(data.slice(72,74),16);
+  U8256P.StatusData.AnaData.Mon = parseInt(data.slice(74,76),16);
+  U8256P.StatusData.AnaData.Day = parseInt(data.slice(76,78),16);
+  U8256P.StatusData.AnaData.Year = parseInt(data.slice(78,80),16);
+  U8256P.StatusData.AnaData.NHR = parseInt(data.slice(80,82),16);
+  U8256P.StatusData.AnaData.NMin = parseInt(data.slice(82,84),16);
+  U8256P.StatusData.AnaData.NSec = parseInt(data.slice(84,86),16);
   //sendall(JSON.stringify(U8256P.AnaData));
   //console.log(U8256P.AnaData.TPV);
-  console.log(data + '\n');
+  //console.log(data + '\n');
 }
 
 
 function parseDigi(data){
-  U8256P.DigiData.GP1 = data.slice(5,9);
-  U8256P.DigiData.GP2 = data.slice(9,13);
-  U8256P.DigiData.GP3 = data.slice(13,17);
-  console.log(data + '\n');
-  //sendall(JSON.stringify(U8256P.DigiData));
-
+  U8256P.StatusData.DigiData.GP1 = data.slice(5,9);
+  U8256P.StatusData.DigiData.GP2 = data.slice(9,13);
+  U8256P.StatusData.DigiData.GP3 = data.slice(13,17);
+  //console.log(data + '\n');
+  sendall(JSON.stringify(U8256P.StatusData));
+  savedata();
 }
 
-var t1 = setInterval(()=>U1Cmd(U8256P.getAna),5000);
+var t1 = setInterval(()=>U1Cmd(U8256P.getAna),1000);
 
 

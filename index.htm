@@ -1,27 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='utf-8'/>
-
+<meta charset="utf-8">
+<meta lang="zh">
+<link rel="stylesheet" href="./client/bootstrap.min.css">
+<link rel="stylesheet" href="./client/U8256.css">
 <script src="./client/jquery-3.3.1.min.js"></script>
+<script src="./client/popper.js"></script>
+<script src="./client/bootstrap.js"></script>
 <script src="./client/U8256.js"></script>
+<script src="./client/echarts.min.js"></script>
 </head>
 <body>
-<label id="fb">测试</label>
+<label ><span class="label label-danger">测试</span></label>
 <input id="sd" type="text" style="width:50%">
 <button type="button" id="fcsSend">发送指令</button>
 <br><h1>读取组数<input id="patt" type="number" style="width:30%">
 <button type="button" id="getSteps">读程序内容</button></h1><br>
 
-<table contenteditable="true" border="2">
-<tr draggable="true"><td>第一行第一列</td><td>第一行第二列</td></tr>
-<tr><td>第二行第一列</td><td>第二行第二列</td></tr>
+<table border="2">
+<h1>
+<tr><td></td><td>测定值</td><td>设定值</td><td>输出值</td></tr>
+<tr><td>温度</td>
+<td><label><span id="TPV" class="label label-danger"></span></label></td>
+<td><label><span id="TSV" class="label label-danger"></span></label></td>
+<td><label><span id="TMV" class="label label-danger"></span></label></td>
+</tr>
+<tr><td>湿度</td>
+<td><label><span id="HPV" class="label label-danger"></span></label></td>
+<td><label><span id="HSV" class="label label-danger"></span></label></td>
+<td><label><span id="HMV" class="label label-danger"></span></label></td>
+</tr>
+<tr><td>振动</td>
+<td><label><span id="TPV" class="label label-danger"></span></label></td>
+<td><label><span id="TSV" class="label label-danger"></span></label></td>
+<td><label><span id="TMV" class="label label-danger"></span></label></td>
+</tr>
+<tr><td>组段</td>
+<td><label><span id="Patt" class="label label-danger"></span></label></td>
+<td><label><span id="Steps" class="label label-danger"></span></label></td>
+<td><label><span id="TMV" class="label label-danger"></span></label></td>
+</tr>
+<tr><td>S/DI/DO</td>
+<td><label><span id="GP1" class="label label-danger"></span></label></td>
+<td><label><span id="GP2" class="label label-danger"></span></label></td>
+<td><label><span id="GP3" class="label label-danger"></span></label></td>
+</tr>
+<tr><td>时分秒</td>
+<td><label><span id="NHR" class="label label-danger"></span></label></td>
+<td><label><span id="NMin" class="label label-danger"></span></label></td>
+<td><label><span id="NSec" class="label label-danger"></span></label></td>
+</tr>
 
+
+
+
+</h1>
 </table>
-
+<div id="echarts"></div>
 <button type="button" id="getcells">读取cell值</button>
-
-<textarea id="ana" rows="30" cols="30"></textarea>
 
 
 </body>

@@ -5,7 +5,22 @@ let socket;
 
 socket = new WebSocket(url);
 socket.onmessage = function(msg){
-  document.getElementById("fb").innerHTML = msg.data;
+  let StatusData = JSON.parse(msg.data);
+  $("#TPV").text((StatusData.AnaData.TPV).toFixed(2));
+  $("#TSV").text((StatusData.AnaData.TSV).toFixed(2));
+  $("#TMV").text((StatusData.AnaData.TMVV));
+  $("#HPV").text((StatusData.AnaData.HPV).toFixed(2))
+  $("#HSV").text((StatusData.AnaData.HSV).toFixed(2));
+  $("#HMV").text((StatusData.AnaData.HMVV));
+  $("#NHR").text(StatusData.AnaData.NHR);
+  $("#NMin").text(StatusData.AnaData.NMin);
+  $("#NSec").text(StatusData.AnaData.NSec);
+  $("#Steps").text(StatusData.AnaData.Steps);
+  $("#Patt").text(StatusData.AnaData.Patt);
+  $("#GP1").text(StatusData.DigiData.GP1);
+  $("#GP2").text(StatusData.DigiData.GP2);
+  $("#GP3").text(StatusData.DigiData.GP3);
+
 }
 /*
 $('#getSteps').bind('click',function(){

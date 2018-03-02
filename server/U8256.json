@@ -6,7 +6,8 @@
     "parity":"even"
   },
   
-  "AnaData":{
+  "StatusData":{
+   "AnaData":{
      "TPV":0,
      "HPV":0,
      "TSV":0,
@@ -21,8 +22,8 @@
      "PRNC":0,
      "PRSS":0,
      "PRES":0,
-     "NHR":0,
-     "NMin":0,
+     "NoHR":0,
+     "NoMin":0,
      "TMVV":0,
      "HMVC":0,
      "HMVV":0,
@@ -33,12 +34,13 @@
      "NHR":0,
      "NMin":0,
      "NSec":0
-  },
+     },
 
-  "DigiData":{
+     "DigiData":{
      "GP1":0,
      "GP2":0,
      "GP3":0
+     }
   },
 
   "getAna":"@010140*\r",
