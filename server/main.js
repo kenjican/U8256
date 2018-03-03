@@ -88,6 +88,11 @@ app.get('/',function(req,res){
   res.sendFile('/home/pi/U8256/index.htm');
 });
 
+app.get('/test',function(req,res){
+  res.sendFile('/home/pi/U8256/index1.htm');
+});
+
+
 app.listen(8888);
 /*
 web socket
