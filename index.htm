@@ -5,11 +5,13 @@
 <meta lang="zh">
 <link rel="stylesheet" href="./client/bootstrap.min.css">
 <link rel="stylesheet" href="./client/U8256.css">
+<link rel="stylesheet" href="./client/style.css">
 <script src="./client/jquery-3.3.1.min.js"></script>
 <script src="./client/popper.js"></script>
 <script src="./client/bootstrap.js"></script>
 <script src="./client/U8256.js"></script>
 <script src="./client/echarts.min.js"></script>
+<script src="./client/Ecalendar.jquery.min.js"></script>
 </head>
 <body>
 <label ><span class="label label-danger">测试</span></label>
@@ -57,8 +59,27 @@
 
 </h1>
 </table>
+<div class="calendarWarp">
+  <input type="text" name="date" class="EClendar" id="EC">
+</div>
 <div id="echarts"></div>
 <button type="button" id="getcells">读取cell值</button>
+<script>
+$(function(){
+   $("#EC").ECalendar({
+      type:"time",
+      //stamp:false,
+      offset:[10,2],
+      format:"yyyy年mm月dd日hh:ii",
+      skin:3,
+      step:10
+   });
+});
+
+
+
+</script>
+
 
 
 </body>
