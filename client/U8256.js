@@ -1,3 +1,23 @@
+let xmlhttp = new XMLHttpRequest();
+
+xmlhttp.onreadystatechange = function(){
+  if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+    let v = JSON.parse(xmlhttp.response);
+      switch v[0]
+      {
+        case "histosry":
+          
+          break;
+        default:
+         
+
+      }
+ 
+  }
+
+}
+
+
 let url = "ws://suzhou.accutherm.com.cn:8887";
 //let url = "ws://192.168.0.12:8887";
 let user;
@@ -182,11 +202,13 @@ $('#getSteps').bind('click',function(){
   console.log(this.id);
 });
 
+
 $('#getcells').bind('click',function(){
   let cell = document.getElementsByTag('td');
   console.log(cell.length);
 });
 */
+
 function fcsSend(cmd){
   cmd = cmd + checkFCS(cmd) + '*\r\n';
   $('#sd').val(cmd);
@@ -219,8 +241,13 @@ $('#getSteps').bind('click',function(){
 });
 
 $('#getcells').bind('click',function(){
+  $.get("/gethis/" + $("#EC").val() + "/" + $("#tEC").val(),function(data,status){
+    console.log(data);
+  });
+/*
   let cell = document.getElementsByTagName('td');
   alert(cell.length);
+*/
 });
 
 $('#fcsSend').bind('click',function(){

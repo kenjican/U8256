@@ -7,7 +7,15 @@ let Readline = serialP.parsers.Readline;
 let U8256P = JSON.parse(fs.readFileSync('./U8256.json'));
 let app = express();
 let mysql = require('mysql');
-
+let charts={
+  "history":{
+     "DT":[],
+     "TPV":[],
+     "TSV":[],
+     "HPV":[],
+     "HSV":[]
+  }
+};
 
 /*
 Mysql
@@ -90,6 +98,26 @@ app.get('/',function(req,res){
 
 app.get('/test',function(req,res){
   res.sendFile('/home/pi/U8256/index1.htm');
+});
+
+app.get('/gethis/:fdate/:tdate',function(req,res){
+  let sql = "select DateTime,TPV,TSV,HPV,HSV from Mar17 where DateTime ";
+  sql += "between " + req.params.fdate + " and " + req.params.tdate;
+  con.query(sql,(error,result,field)=>{
+    if(error){
+      console.log(error.message);
+    }
+    for(let i=0;i<result.length;i++){
+      charts.history.DT.push(result[i].DateTiime);  
+      charts.history.TPV.push(result[i].TPV); 
+      charts.history.TSV.push(result[i].TSV); 
+      charts.history.HPV.push(result[i].HPV); 
+      charts.history.HSV.push(result[i].HSV);
+    }
+
+    res.send(charts);
+    res.end;
+
 });
 
 
