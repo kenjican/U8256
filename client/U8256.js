@@ -34,6 +34,7 @@ series :
    type:'gauge',
    min:-50,
    max:100,
+   center:['40%','40%'],
    splitNumber:15,
    radius: '200px',
    axisLine: {            // 坐标轴线
@@ -101,7 +102,7 @@ series :
  {
   name:'Humi',
   type:'gauge',
-  center:['26%','55%'],
+  center:['16%','45%'],
   radius:'50%',
   min:0,
   max:100,
@@ -154,19 +155,55 @@ series :
  {
   name:'Hz',
   type:'gauge',
-  center:['75%','55%'],
+  center:['65%','45%'],
   radius:'50%',
   min:0,
   max:100,
   startAngle:140,
-  endAngle:-150
+  endAngle:-150,
+
+  axisLine:{
+    lineStyle:{
+      color:[[0.3,'lime'],[0.7,'#1e90ff'],[1,'#ff4500']],
+      width:2,
+      shadowColor:'#fff',
+      shadowBlur:10
+    }
+  },
+  axisLabel:{
+    textStyle:{
+      fontWeight:'bolder',
+      color:'#fff',
+      shadowColor:'#fff',
+      shadowBlur:10
+    }
+  },
+  
+  axixTick:{
+    length:12,
+    lineStyle:{
+      color:'auto',
+      shadowColor:'#fff',
+      shadowBlur:10
+    }
+  },
+
+  splitLine:{
+   
+  },
+  title:{
+    color:'#1E90FF',
+    fontSize:40
+
+  },
+  detail:{
+    fontSize:40,
+    color:'#1E90FF'
+
+  },
+  data:[{value:25,name:'频率'}]
 
  }
-
-
-
-
-
  ]
  
 };

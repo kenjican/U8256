@@ -102,7 +102,7 @@ app.get('/test',function(req,res){
 
 app.get('/gethis/:fdate/:tdate',function(req,res){
   let sql = "select DateTime,TPV,TSV,HPV,HSV from Mar17 where DateTime ";
-  sql += "between " + req.params.fdate + " and " + req.params.tdate;
+  sql += "between" + req.params.fdate + " and " + req.params.tdate;
   con.query(sql,(error,result,field)=>{
     if(error){
       console.log(error.message);
