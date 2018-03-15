@@ -1,5 +1,5 @@
 let xmlhttp = new XMLHttpRequest();
-
+/*
 xmlhttp.onreadystatechange = function(){
   if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
     let v = JSON.parse(xmlhttp.response);
@@ -17,7 +17,7 @@ xmlhttp.onreadystatechange = function(){
 
 }
 
-
+*/
 let url = "ws://suzhou.accutherm.com.cn:8887";
 //let url = "ws://192.168.0.12:8887";
 let user;
@@ -209,6 +209,16 @@ series :
 };
 
 
+let hisChart = {
+
+
+
+
+
+}
+
+
+
 socket = new WebSocket(url);
 socket.onmessage = function(msg){
   let StatusData = JSON.parse(msg.data);
@@ -278,7 +288,9 @@ $('#getSteps').bind('click',function(){
 });
 
 $('#getcells').bind('click',function(){
-  $.get("/gethis/" + $("#EC").val() + "/" + $("#tEC").val(),function(data,status){
+  let str = $("#EC").val() + "/" + $("#tEC").val();
+  console.log(str);
+  $.get("/gethis/" + str ,function(data,status){
     console.log(data);
   });
 /*

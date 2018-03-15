@@ -93,22 +93,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/',function(req,res){
-  res.sendFile('/home/pi/U8256/index.htm');
+  res.sendFile('/home/kenji/U8256/index.htm');
 });
 
 app.get('/test',function(req,res){
-  res.sendFile('/home/pi/U8256/index1.htm');
+  res.sendFile('/home/kenji/U8256/index1.htm');
 });
 
 app.get('/gethis/:fdate/:tdate',function(req,res){
-  let sql = "select DateTime,TPV,TSV,HPV,HSV from Mar17 where DateTime ";
-  sql += "between" + req.params.fdate + " and " + req.params.tdate;
+  let sql = 'select DateTime,TPV,TSV,HPV,HSV from Mar17 where DateTime ';
+  sql += 'between "' + req.params.fdate + '" and "' + req.params.tdate + '"';
+  console.log(sql);
   con.query(sql,(error,result,field)=>{
     if(error){
       console.log(error.message);
     }
     for(let i=0;i<result.length;i++){
-      charts.history.DT.push(result[i].DateTiime);  
+      charts.history.DT.push(result[i].DateTime.toString());  
       charts.history.TPV.push(result[i].TPV); 
       charts.history.TSV.push(result[i].TSV); 
       charts.history.HPV.push(result[i].HPV); 
@@ -117,9 +118,8 @@ app.get('/gethis/:fdate/:tdate',function(req,res){
 
     res.send(charts);
     res.end;
-
 });
-
+});
 
 app.listen(8888);
 /*
@@ -209,6 +209,4 @@ function parseDigi(data){
   savedata();
 }
 
-var t1 = setInterval(()=>U1Cmd(U8256P.getAna),1000);
-
-
+//var t1 = setInterval(()=>U1Cmd(U8256P.getAna),1000);

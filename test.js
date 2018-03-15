@@ -1,3 +1,5 @@
+let express = require('express');
+let app = express();
 let mysql = require('mysql');
 let con = mysql.createConnection({
   host:"localhost",
@@ -29,7 +31,7 @@ con.query(sql,(error,result,fields)=>{
     return console.error(error.message);
   }
    for(let i=0;i<result.length;i++){
-     charts.DT.push(result[i].DateTime);
+     charts.DT.push(result[i].DateTime.toString());
      charts.TPV.push(result[i].TPV);
      charts.TSV.push(result[i].TSV);
      charts.HPV.push(result[i].HPV);
@@ -37,3 +39,6 @@ con.query(sql,(error,result,fields)=>{
    }
    console.log(charts);
 });
+
+
+
